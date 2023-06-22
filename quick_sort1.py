@@ -1,0 +1,45 @@
+from typing import MutableSequence
+
+def qsort(a: MutableSequence, left: int, right: int) -> None:
+    '''배열을 나누어 출력'''
+    n = len(a)
+    pl = left   # 왼쪽 커서
+    pr = right  # 오른쪽 커서
+
+    x = a[(left + right) // 2] # 피벗 원소(가운데 원소)
+
+    print(f'a[{left}] ~ a[{right}] : ', a[left : right + 1])
+
+    while pl <= pr:
+        while a[pl] < x:
+            pl += 1
+        while a[pr] > x:
+            pr -= 1
+
+        if pl <= pr:
+            a[pl], a[pr] = a[pr], a[pl]
+            pl += 1
+            pr -= 1
+    
+    if left < pr :
+        qsort(a, left, pr)
+    if pl < right :
+        qsort(a, pl, right)
+
+def quick_sort(a: MutableSequence) -> None:
+    qsort(a, 0, len(a) - 1)
+
+if __name__ == '__main__':
+    print('퀵 정렬을 수행합니다.')
+    num = int(input('원소 수를 입력하세요.: '))
+    x = [None] * num
+
+    for i in range(num):
+        x[i] = int(input('x[{}]: '.format(i)))
+
+    quick_sort(x)
+
+    print('오름차순으로 정렬했습니다.')
+    for i in range(num):
+        print('x[{}] = {}'.format(i, x[i]))
+
